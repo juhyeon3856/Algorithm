@@ -1,4 +1,4 @@
-# [D2] 달팽이 숫자 - 1954 
+# [D2] 달팽이 숫자 - 1954  
 
 [문제 링크](https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV5PobmqAPoDFAUq) 
 
