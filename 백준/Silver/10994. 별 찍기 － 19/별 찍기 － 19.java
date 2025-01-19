@@ -19,8 +19,8 @@ public class Main {
 
 		
 		//재귀함수 호출
-        function(1);
-        listToString(sb);
+		function(1);
+        	listToString(sb);
 		
 		//답 출력
 		System.out.println(sb.toString());
@@ -40,7 +40,7 @@ public class Main {
 				star[r+i][r+num-1] = 1;
 				star[r+num-1][r+i] = 1;
 			}
-            function(n+1);
+            	function(n+1);
 		}
 	}
 	
