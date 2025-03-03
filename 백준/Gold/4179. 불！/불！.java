@@ -2,14 +2,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
 	static int N, M, answer;
 	static boolean[][] map;
-	static Queue<int[]> jqueue;
-	static Queue<int[]> fqueue;
+	static ArrayDeque<int[]> jqueue;
+	static ArrayDeque<int[]> fqueue;
 	static int[] dr = { 1, -1, 0, 0 };
 	static int[] dc = { 0, 0, 1, -1 };
 
@@ -19,8 +20,8 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 
-		jqueue = new LinkedList<>();
-		fqueue = new LinkedList<>();
+		jqueue = new ArrayDeque<>();
+		fqueue = new ArrayDeque<>();
 		map = new boolean[N][M];
 
 		for (int i = 0; i < N; i++) {
