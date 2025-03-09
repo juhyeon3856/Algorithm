@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class Main {
 	static int[] thief;
 	static char[][] map;
 	static boolean[][] visited;
-	static List<int[]>[] queue;
+	static ArrayDeque<int[]>[] queue;
 	static int N, M, answer;
 	static int[] dr = { -1, 1, 0, 0 };
 	static int[] dc = { 0, 0, -1, 1 };
@@ -26,9 +27,9 @@ public class Main {
 		thief = new int[2];
 		map = new char[N][M];
 		visited = new boolean[N][M];
-		queue = new LinkedList[2];
-		queue[0] = new LinkedList<>();
-		queue[1] = new LinkedList<>();
+		queue = new ArrayDeque[2];
+		queue[0] = new ArrayDeque<>();
+		queue[1] = new ArrayDeque<>();
 
 		answer = 0;
 
@@ -54,7 +55,7 @@ public class Main {
 			answer++;
 			int a = (answer + 1) % 2;
 			while (!queue[(answer + 1) % 2].isEmpty()) {
-				int[] q = queue[(answer + 1) % 2].remove(0);
+				int[] q = queue[(answer + 1) % 2].poll();
 				for (int d = 0; d < 4; d++) {
 					int nr = q[0] + dr[d];
 					int nc = q[1] + dc[d];
