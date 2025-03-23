@@ -21,14 +21,19 @@ public class Main {
 			sim.put(s, i);
 		}
 
+        StringBuilder sb = new StringBuilder();
+
 		for (int i = 0; i < M; i++) {
 			String s = br.readLine();
 			int tmp = s.charAt(0);
 			if (tmp < 'A') {
-				System.out.println(ism.get(Integer.parseInt(s) - 1));
+                sb.append(ism.get(Integer.parseInt(s) - 1)).append("\n");
+				//System.out.println(ism.get(Integer.parseInt(s) - 1));
 			} else {
-				System.out.println(sim.get(s) + 1);
+                sb.append(sim.get(s) + 1).append("\n");
+				//System.out.println(sim.get(s) + 1);
 			}
 		}
+        System.out.println(sb);
 	}
 }
