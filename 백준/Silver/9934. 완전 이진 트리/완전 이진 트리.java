@@ -1,8 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayDeque;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -12,7 +11,8 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
-		N2 = (int) Math.pow(2, N);
+//		N2 = (int) Math.pow(2, N);
+		N2 = 1 << N;
 		p = new int[N2 + 1];
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -20,11 +20,13 @@ public class Main {
 			p[i] = Integer.parseInt(st.nextToken());
 		}
 
-		Queue<int[]> queue = new LinkedList<>();
+		ArrayDeque<int[]> queue= new ArrayDeque<>();
+//		Queue<int[]> queue = new LinkedList<>();
 		queue.offer(new int[] { 0, N2 / 2 });
 
 		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < Math.pow(2, i); j++) {
+			for (int j = 0; j < 1<<i; j++) {
+//			for (int j = 0; j < Math.pow(2, i); j++) {
 				int[] q = queue.poll();
 				if (q[1] == 0)
 					return;
@@ -36,5 +38,4 @@ public class Main {
 		}
 
 	}
-
 }
