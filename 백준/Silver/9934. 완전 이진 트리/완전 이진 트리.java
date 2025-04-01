@@ -1,41 +1,44 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 import java.util.StringTokenizer;
 
 public class Main {
 	static int[] p;
 	static int N, N2;
+	static BufferedReader br;
+	static StringTokenizer st;
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
-//		N2 = (int) Math.pow(2, N);
 		N2 = 1 << N;
-		p = new int[N2 + 1];
+		p = new int[N2];
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		for (int i = 1; i < N2; i++) {
-			p[i] = Integer.parseInt(st.nextToken());
-		}
+		st = new StringTokenizer(br.readLine());
 
-		ArrayDeque<int[]> queue= new ArrayDeque<>();
-//		Queue<int[]> queue = new LinkedList<>();
-		queue.offer(new int[] { 0, N2 / 2 });
+		dfs(1);
+//		System.out.println(Arrays.toString(p));
 
+		int answer = 1;
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < 1<<i; j++) {
-//			for (int j = 0; j < Math.pow(2, i); j++) {
-				int[] q = queue.poll();
-				if (q[1] == 0)
-					return;
-				System.out.print(p[q[0] + q[1]] + " ");
-				queue.offer(new int[] { q[0], q[1] / 2 });
-				queue.offer(new int[] { q[0] + q[1], q[1] / 2 });
+			for (int j = 0; j < 1 << i; j++) {
+				sb.append(p[answer++]).append(" ");
 			}
-			System.out.println();
+			sb.append("\n");
 		}
-
+		System.out.println(sb);
 	}
+
+	private static void dfs(int idx) {
+		if (idx * 2 >= N2) {
+			p[idx] = Integer.parseInt(st.nextToken());
+			return;
+		}
+		dfs(idx * 2);
+		p[idx] = Integer.parseInt(st.nextToken());
+		dfs(idx * 2 + 1);
+	}
+
 }
