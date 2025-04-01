@@ -37,6 +37,8 @@ public class Main {
 					map[i][j] = 9;
 					answer--;
 				} else if (type > 0) {
+					map[i][j] = 10;
+					answer--;
 					cctvs.add(new int[] { i, j, type });
 				} else {
 					map[i][j] = type;
@@ -59,12 +61,16 @@ public class Main {
 	}
 
 	private static void dfs(int index) throws Exception {
+//		printMap();
+//		System.out.println("answer : " + answer);
+//		System.out.println("minAnswer : " + minAnswer);
+//		br.readLine();
 		
-
 		if (index == cctvCount) {
 			minAnswer = answer < minAnswer ? answer : minAnswer;
 			return;
 		}
+		
 		int[] cctv = cctvs.get(index);
 		int r = cctv[0];
 		int c = cctv[1];
@@ -176,8 +182,8 @@ public class Main {
 	}
 
 	private static void look(int r, int c, int dr, int dc, int delta) {
-		int nr = r;
-		int nc = c;
+		int nr = r+dr;
+		int nc = c+dc;
 
 		while (check(nr, nc) && map[nr][nc] != 9) {
 			if (map[nr][nc] == 0 && delta == 1) {
