@@ -11,17 +11,16 @@ public class Main {
 		// 입력 및 초기화
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
-		long[] zero = new long[N + 1];
-		long[] one = new long[N + 1];
-
-		one[1] = 1;
+		long zero = 0;
+		long one = 1;
 
 		for (int i = 2; i <= N; i++) {
-			one[i] = zero[i - 1];
-			zero[i] = zero[i - 1] + one[i - 1];
+			long temp = zero;
+			zero = one + zero;
+			one = temp;
 		}
 		
-		System.out.println(one[N] + zero[N]);
+		System.out.println(one + zero);
 
 	}
 }
