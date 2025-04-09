@@ -1,51 +1,33 @@
-
-import java.util.Scanner;
-import java.io.FileInputStream;
-import java.util.StringTokenizer;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
+public class Solution {
+	static int N, L;
+	static int[] dp;
 
-class Solution
-{
-    static int N, L, max;
-	static int[][] p;
-    
-	public static void main(String args[]) throws Exception {
+	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
 		int T = Integer.parseInt(br.readLine());
-
-		for (int test_case = 1; test_case <= T; test_case++) {
+		for (int t = 1; t <= T; t++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-
 			N = Integer.parseInt(st.nextToken());
 			L = Integer.parseInt(st.nextToken());
-			max = 0;
-			p = new int[N][2];
+			dp = new int[L + 1];
 
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
-				p[i][0] = Integer.parseInt(st.nextToken());
-				p[i][1] = Integer.parseInt(st.nextToken());
+				int score = Integer.parseInt(st.nextToken());
+				int kcal = Integer.parseInt(st.nextToken());
+
+				for (int j = L; j >= kcal; j--) {
+					dp[j] = dp[j - kcal] + score > dp[j] ? dp[j - kcal] + score : dp[j];
+				}
 			}
-
-			subset(0, 0, 0);
-			System.out.println("#" + test_case + " " + max);
+//			System.out.println(Arrays.toString(dp));
+			System.out.println("#" + t + " " + dp[L]);
 		}
-	}
-
-	private static void subset(int depth, int f, int k) {
-		if (depth == N) {
-			if (k <= L && f > max) {
-				max = f;
-			}
-			return;
-		}
-        
-		if (k <= L) {
-			subset(depth + 1, f + p[depth][0], k + p[depth][1]);
-			subset(depth + 1, f, k);
-		}
-
 	}
 }
