@@ -1,6 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -16,8 +16,8 @@ public class Main {
 			data[i] = Integer.parseInt(st.nextToken()); // 왼쪽 사람들 중 키가 큰 사람 수
 		}
 
-		List<Integer> answer = new LinkedList<Integer>();
-//		List<Integer> answer = new ArrayList()<Integer>();
+//		List<Integer> answer = new LinkedList<Integer>();
+		List<Integer> answer = new ArrayList<Integer>();
 
 		for (int i = N; i > 0; i--) {
 			answer.add(data[i], i);
