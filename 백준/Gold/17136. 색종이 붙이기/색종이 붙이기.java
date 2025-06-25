@@ -19,7 +19,7 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < N; j++) {
-				map[i][j] = st.nextToken().equals("1"); // 색종이를 붙여야 하는 곳에는 true
+				map[i][j] = Integer.parseInt(st.nextToken())==1; // 색종이를 붙여야 하는 곳에는 true
 				if (map[i][j]) { // 색종이를 붙여야 하는 곳의 개수를 세는 로직
 					endCount++;
 				}
