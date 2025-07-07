@@ -1,42 +1,41 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-	private static int[] p;
-	private static int N, M, R;
-	private static int[] nums;
-	private static int min = Integer.MAX_VALUE;
-	private static int answer;
-	
-	public static void main(String[] args) {
-		R=3;
-		nums = new int[R];
-		
-		
-		Scanner sc = new Scanner(System.in);
-		N = sc.nextInt();
-		M = sc.nextInt();
+	static int[] p;
+	static int N, M, sum;
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		st = new StringTokenizer(br.readLine());
+		// 초기화
 		p = new int[N];
+
 		for (int i = 0; i < N; i++) {
-			p[i] = sc.nextInt();
+			p[i] = Integer.parseInt(st.nextToken());
 		}
-		
-		combi(0, 0, 0);
-		System.out.println(answer);
-		
+		// 입력 완료 로직 시작!!
+
+		combi(0, 0, 0, 0);
+		System.out.println(sum);
 	}
-	
-	public static void combi(int cnt, int start, int tot) {
-		if(cnt==R) {
-			if(M >= tot && min > M-tot){
-				min =  Math.abs(M-tot);
-				answer = tot;
-			}
+
+	private static void combi(int depth, int start, int tot, int flag) {
+		if (depth == 3) {
+			if (tot <= M && tot > sum)
+				sum = tot;
 			return;
 		}
 		for (int i = start; i < N; i++) {
-			nums[cnt] = p[i];
-			combi(cnt+1, i+1, tot+p[i]);
-			nums[cnt] = 0;
+			if ((flag & 1 << i) != 0)
+				continue;
+			combi(depth + 1, i, tot + p[i], flag | 1 << i);
 		}
 	}
+
 }
