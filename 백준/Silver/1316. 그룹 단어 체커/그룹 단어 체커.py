@@ -1,9 +1,19 @@
-N = int(input())
-count = 0
+n = int(input())
+answer = 0
 
-for _ in range(N):
-  string = input()
-  if list(string) == sorted(string, key=string.find):
-    count += 1
+for _ in range(n):
+  isExist = set()
+  str = input()
+  cs = ''
+  isGroup = True
+  for s in str:
+    if cs == s: continue
+    if s in isExist:
+      isGroup = False
+      break
+    cs = s
+    isExist.add(cs)
+  if isGroup:
+    answer+=1
 
-print(count)
+print(answer)
