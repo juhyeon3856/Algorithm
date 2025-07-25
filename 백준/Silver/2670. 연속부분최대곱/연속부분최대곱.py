@@ -1,12 +1,14 @@
+import sys
+
+input = sys.stdin.readline
+
 N = int(input())
+answer = 0
+dp = 0
 
-data = [float(input()) for _ in range(N)]
-max = 0
-for s in range(N):
-  mult = 1.0
-  for e in range(s, N):
-    mult *= data[e]
-#    _max = round(mult, 3)
-    max = mult if mult > max else max
+for i in range(N):
+  num = float(input())
+  dp = max(dp*num, num)
+  answer = max(answer, dp)
 
-print(f"{max:.3f}")
+print(f"{answer:.3f}")
