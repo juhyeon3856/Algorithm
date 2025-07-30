@@ -1,8 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -10,7 +11,7 @@ public class Main {
 	static int N, M, answer;
 	static int[][] map;
 	static List<int[]> land;
-	static Queue<int[]> queue;
+	static ArrayDeque<int[]> queue;
 	static boolean[][] visited;
 
 	public static void main(String[] args) throws IOException {
@@ -19,8 +20,8 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		map = new int[N][M];
-		land = new LinkedList<int[]>();
-		queue = new LinkedList<int[]>();
+		land = new ArrayList<int[]>();
+		queue = new ArrayDeque<int[]>();
 		answer = 0;
 		for (int i = 0; i < N; i++) {
 			String str = br.readLine();
@@ -41,7 +42,7 @@ public class Main {
 
 	public static int bfs(int r, int c) {
 		int result = 0;
-		queue.add(new int[] { r, c, 0 });
+		queue.offer(new int[] { r, c, 0 });
 		visited[r][c] = true;
 		while (!queue.isEmpty()) {
 			int[] q = queue.poll();
