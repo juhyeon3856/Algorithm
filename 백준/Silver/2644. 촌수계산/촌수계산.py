@@ -21,12 +21,16 @@ visited[S] = 1
 
 while queue:
     q = queue.pop()
-    if q == G:
-        ans = visited[G] - 1
-        break
+    # if q == G:
+    #     ans = visited[G] - 1
+    #     break
     for nxt in adj[q]:
         if visited[nxt]:
             continue
+        if nxt == G:
+            ans = visited[q]
+            queue.clear()
+            break
         queue.appendleft(nxt)
         visited[nxt] = visited[q] + 1
 
