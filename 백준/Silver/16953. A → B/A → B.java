@@ -16,8 +16,8 @@ public class Main {
 			if (B % 10 == 1) {
 				B /= 10;
 				answer++;
-			} else if (B % 2 == 0) {
-				B /= 2;
+			} else if ((B & 1) == 0) {
+				B = B >> 1;
 				answer++;
 			} else {
 				answer = -1;
