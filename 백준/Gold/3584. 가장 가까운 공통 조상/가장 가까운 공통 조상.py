@@ -1,43 +1,36 @@
-# 가장 가까운 공통 조상에서 자식 노드가 갈라진다.
-
-import sys
-sys.setrecursionlimit(10001)
+# 자식부터 부모로 올라간다.
+# 최초로 2개가 되는 곳에서 멈춘다.
 
 T = int(input())
 
-
-def dfs(num):
-    result = 0    # num 포함, 아래 node1, node2개수
-    if num in {node1, node2}:
-        result += 1
-    for nxt in adj[num]:
-        result += dfs(nxt)
-        if ans[0]: return result  # 답을 만났으면(dfs탈출)
-    else:
-        if result == 2:  # 양갈래에 있으면
-            ans[0] = num
-    return result
-
-
 for t in range(1, T + 1):
     N = int(input())
-    adj = [[] for _ in range(N + 1)]
-    isRoot = [1] * (N + 1)  # 루트 구하기 위함
+    adj = [0] * (N + 1)  # 부모 정보 저장
 
     # 간선 정보 입력받기
     for _ in range(1, N):
         p, c = map(int, input().split())
-        adj[p].append(c)
-        isRoot[c] = 0  # 자식이였던 적이 있으면 root일 수 없음
+        adj[c] = p  # 자식에 부모를 저장
 
     # 두 노드 입력
     node1, node2 = map(int, input().split())
+    parents1, parents2 = [node1], [node2]
 
-    # root 구하기
-    isRoot[0] = 0
-    root = isRoot.index(1)
+    # 부모 만나는 순으로 저장
+    while adj[node1]:  # node1부터 시작해서 부모 저장
+        node1 = adj[node1]
+        parents1.append(node1)
+    while adj[node2]:  # node2부터 시작해서 부모 저장
+        node2 = adj[node2]
+        parents2.append(node2)
 
-    # 입력 완료! 로직 시작
-    ans = [0]
-    dfs(root)
-    print(ans[0])
+    # 공통 부모 찾기
+    cnt = [0] * (N + 1)  # parents배열에 나온 횟수 저장
+    for p1 in parents1:  # p1에 대한 cnt 반영
+        cnt[p1] += 1
+
+    for p2 in parents2:  # p2에 대한 cnt 반영
+        cnt[p2] += 1
+        if cnt[p2] == 2:  # p1에도 있었고, p2에도 있었으면
+            print(p2)  # 정답 출력
+            break  # 처음 만난게 젤 가까운 부모노드
