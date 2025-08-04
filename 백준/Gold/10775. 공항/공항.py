@@ -8,7 +8,7 @@ data = input().split()
 
 G = int(data[0])
 P = int(data[1])
-lst = list(map(int, data[2:2+P]))
+lst = list(map(int, data[2:]))
 
 p = [i for i in range(G + 1)]
 
