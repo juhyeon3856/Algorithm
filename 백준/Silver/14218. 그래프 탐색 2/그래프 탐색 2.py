@@ -1,3 +1,6 @@
+# bfs한번만 돌리고 prev, nxt를 저장해서 연결 될 때 마다 업데이트 하는 방식
+# 시간 복잡도 (N+M+Q)*Q에서 (M+Q)*Q로 줄어들 듯 -> 사실상 (N+Q)*Q일수도?
+
 from collections import deque
 
 N, M = map(int, input().split())
@@ -10,24 +13,50 @@ for _ in range(M):
     adj[b].append(a)  # 양방향
 
 
-def find():     # N+M
-    result = [-1] * (N + 1)  # 각 도시별, 최소 방문 도시 수 (visited로 사용)
+def init():  # N+M   # 자기 다음으로 가야하는 노드를 기억함
+    result_cnt = [-1] * (N + 1)
     queue = deque([1])
-    result[1] = 0
+    result_cnt[0] = result_cnt[1] = 0
 
     while queue:
         cur = queue.popleft()
         for nxt in adj[cur]:
-            if result[nxt] > -1:  # 이미 방문한 적 있으면
+            if result_cnt[nxt] > -1:  # 이미 방문한 적 있으면
                 continue
             queue.append(nxt)
-            result[nxt] = result[cur] + 1
-    return result[1:]
+            result_cnt[nxt] = result_cnt[cur] + 1
+    return result_cnt
+
+
+def update(n):  # p -> n으로 연결
+    queue = deque([n])  # n부터 n에서 연결된 것들을 업데이트
+    while queue:
+        c = queue.popleft()
+        for nn in adj[c]:
+            if cnt[nn] != -1 and cnt[nn] <= cnt[c] + 1: continue
+            cnt[nn] = cnt[c] + 1
+            queue.append(nn)  # 최단거리이므로 루프 가능성 없음
 
 
 Q = int(input())
-for _ in range(Q):      # 500
+cnt = init()  # bfs는 이때 한번만 돌림
+for _ in range(Q):  # 500
     a, b = map(int, input().split())
-    adj[a].append(b)
-    adj[b].append(a)  # 다리 양방향 연결
-    print(*find())
+    adj[a].append(b)  # a에 b 연결하기 : a -> b
+    adj[b].append(a)  # b에 a 연결하기 b -> a
+    if cnt[a] == cnt[b] == -1:  # 둘다 -1인 경우 서로 연결
+        pass
+    elif cnt[a] == -1:
+        cnt[a] = cnt[b] + 1
+        update(a)
+    elif cnt[b] == -1:
+        cnt[b] = cnt[a] + 1
+        update(b)
+    elif cnt[a] > cnt[b] + 1:
+        cnt[a] = cnt[b] + 1
+        update(a)
+    elif cnt[a] + 1 < cnt[b]:
+        cnt[b] = cnt[a] + 1
+        update(b)
+
+    print(*cnt[1:])
