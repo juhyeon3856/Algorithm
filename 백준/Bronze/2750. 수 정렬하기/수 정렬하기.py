@@ -1,4 +1,4 @@
-# 퀵정렬 : 인덱스 사용
+# 병합정렬 : 인덱스 사용
 N = int(input())
 lst = [int(input()) for _ in range(N)]
 
@@ -7,7 +7,7 @@ lst = [int(input()) for _ in range(N)]
 def swap(i, j):
     lst[i], lst[j] = lst[j], lst[i]
 
-
+# 퀵정렬
 def qsort(si, ei):  # 시작, 끝 인덱스
     if si >= ei: return  # 길이가 1이면 종료
     st, s, e = si, si + 1, ei
@@ -21,7 +21,7 @@ def qsort(si, ei):  # 시작, 끝 인덱스
 
     # st위치 조정 -> e에 st보내기
     if lst[st] < lst[e]:
-        e = e-1
+        e = e - 1
     swap(st, e)
 
     # 0부터 e-1까지 다시 qsort
@@ -29,6 +29,31 @@ def qsort(si, ei):  # 시작, 끝 인덱스
     # e+1부터 ei까지 다시 qsort
     qsort(e + 1, ei)
 
+# 병합정렬
+def msort(s, e):
+    if s + 1 >= e:  # 길이가 1인 경우
+        return
+    mid = (s + e) // 2  # 중간에서 자르기
+    msort(s, mid)  # 앞 정렬
+    msort(mid, e)  # 뒤 정렬
+    temp = []
+    i, j = s, mid
+    while i < mid and j < e:  # True해도 됨
+        if lst[i] < lst[j]:
+            temp.append(lst[i])
+            i += 1
+        else:
+            temp.append(lst[j])
+            j += 1
+        if i == mid:
+            temp.extend(lst[j:e])
+            break
+        if j == e:
+            temp.extend(lst[i:mid])
+            break
+    lst[s:e] = temp
 
-qsort(0, N - 1)
+
+msort(0, N)
+# qsort(0, N - 1)
 print(*lst, sep="\n")
