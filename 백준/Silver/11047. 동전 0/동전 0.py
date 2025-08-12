@@ -1,8 +1,11 @@
 N, K = map(int, input().split())
-A = [int(input()) for _ in range(N)]
+coin = [int(input()) for _ in range(N)]
+coin.sort(key=lambda x: -x)  # 역순 정렬
 
-answer = 0
-for i in range(N-1, -1, -1):
-    answer += K//A[i]
-    K %= A[i]
-print(answer)
+# 입력 완료! 로직 시작
+# 아이디어 : 가치가 높은 동전 먼저 사용
+ans = 0
+for c in coin:
+    ans += K // c
+    K %= c
+print(ans)
