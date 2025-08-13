@@ -1,15 +1,10 @@
-import sys
-
-sys.setrecursionlimit(10 ** 5)
-
-
 def union(x, y):
     x, y = find(x), find(y)
     if x == y:  # 부모가 같으면 == 같은 집합이면
         return False
 
     #  큰쪽 부모를 작은쪽으로 만들기
-    if r[x] < r[y]:
+    if r[x] > r[y]:
         p[y] = x
         r[x] += r[y]
     else:
