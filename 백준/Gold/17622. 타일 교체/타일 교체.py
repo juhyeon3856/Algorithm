@@ -51,7 +51,6 @@ def get_load(init):
             nr, nc = cr + dr[arr[cr][cc]][d], cc + dc[arr[cr][cc]][d]
 
             if (nr, nc) == (pr, pc):
-                # if 0 <= nr < N and 0 <= nc < N and visited[nr][nc]:
                 break
         else:
             return init
@@ -60,8 +59,10 @@ def get_load(init):
 
 
 if K == 0:
-    ans = get_load(-1)
-    print(ans)
+    if arr[0][0] not in (1, 5):
+        print(-1)
+    else:
+        print(get_load(-1))
 else:
     ans = N * N * 100
     if arr[0][0] not in (1, 5):
