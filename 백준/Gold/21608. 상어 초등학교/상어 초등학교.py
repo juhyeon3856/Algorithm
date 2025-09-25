@@ -1,112 +1,80 @@
-# 1시 40분
-
+# 11시 49분 시작
+# 11시 51분 코드 작성
+# 12시 1분 코드작성 완료 디버깅 시작
 '''
-로직
+20
+좋아하는 친구 많은 순
+빈칸 많은 순
+행 작은순
+열 작은순
 
-1. 자리배치(인접한곳에)
-    - 좋아하는 학생 많은 곳으로
-    - 빈칸이 많은 곳으로
-    - 행 번호 작은 곳으로
-    - 열 번호 작은곳으로
-
-
-2. 만족도 조사(set 길이를 잘 써보자)
-    - r, c 순회하면서 조사
-    - 복잡도 N * N
+점수는
+좋아하는 친구의 수 -> 다시 계산해야함
 '''
 
-# 입력
 N = int(input())
+list_dict = {}
+order_lst = []
+for _ in range(N * N):
+    ni, l1, l2, l3, l4 = map(int, input().split())
+    list_dict[ni] = {l1, l2, l3, l4}
+    order_lst.append(ni)
 
-# 전처리
-board = [[0] * N for _ in range(N)]
-input_dic = {}
-students = {}
-
-dr = [1, -1, 0, 0]
-dc = [0, 0, 1, -1]
-
-
-# 다시다시 어렵게 가지말자 그냥 완탐하자...*******************
-
-# 학생 배치
-def go_stu(num):
-    # 선호학생 수, 빈칸 수 세기
-    like_cnt = [[0] * N for _ in range(N)]
-    for r in range(N):
-        for c in range(N):
-            like_cnt[r][c] = cnt_like(num, r, c)
-
-    # 최댓값 찾기, 튜플 최대 찾으면 됌
-    mx = (-1, -1)
-    result = (-1, -1)
-    for r in range(N):
-        for c in range(N):
-            if board[r][c]:  # 주인있으면
-                continue
-
-            if mx < like_cnt[r][c]:  # 최댓값이면
-                mx = like_cnt[r][c]
-                result = (r, c)
-    return result
-
-
-def cnt_like(num, r, c):
-    lcnt, bcnt = 0, 0
-    check_set = input_dic.get(num)
-    for d in range(4):
-        nr, nc = r + dr[d], c + dc[d]
-        if not check(nr, nc):
-            continue
-        if board[nr][nc] == 0:  # 빈칸이면
-            bcnt += 1
-        elif board[nr][nc] in check_set:
-            lcnt += 1
-    return lcnt, bcnt
+dr = [-1, 1, 0, 0]
+dc = [0, 0, -1, 1]
 
 
 def check(r, c):
     return 0 <= r < N and 0 <= c < N
 
 
-def do_score():
-    result = 0
+def find_index(num):
+    candi = []
     for r in range(N):
         for c in range(N):
-            result += check_score(r, c)
-    return result
+            if arr[r][c] != 0:
+                continue
+            score, blank = get_score_blank(r, c, num)
+            candi.append((-score, -blank, r, c))
+    return min(candi)
 
 
-def check_score(r, c):
-    num = board[r][c]
-    want = input_dic.get(num)
-    real = set()
+def get_score_blank(r, c, num):
+    score, blank = 0, 0
     for d in range(4):
         nr, nc = r + dr[d], c + dc[d]
+        if not check(nr, nc):
+            continue
+        if arr[nr][nc] == 0:
+            blank += 1
+            continue
+        if arr[nr][nc] in list_dict[num]:
+            score += 1
+    return score, blank  # score, blank
 
-        if check(nr, nc):
-            real.add(board[nr][nc])
-    result = len(want & real)
-    if result == 0:
+
+def get_score(score):
+    if score == 0:
         return 0
-    elif result == 1:
+    if score == 1:
         return 1
-    elif result == 2:
+    if score == 2:
         return 10
-    elif result == 3:
+    if score == 3:
         return 100
-    elif result == 4:
+    if score == 4:
         return 1000
 
 
+arr = [[0] * N for _ in range(N)]
+for sn in order_lst:
+    _, _, sr, sc = find_index(sn)
+    arr[sr][sc] = sn
 
-for _ in range(N * N):
-    cn, like1, like2, like3, like4 = map(int, input().split())
-    input_dic[cn] = {like1, like2, like3, like4}  # 만족도 조사용
+ans = 0
 
-    # 학생 배치
-    gr, gc = go_stu(cn)
-    board[gr][gc] = cn
-
-# 만족도 조사
-print(do_score())
+for gr in range(N):
+    for gc in range(N):
+        _score, _ = get_score_blank(gr, gc, arr[gr][gc])
+        ans += get_score(_score)
+print(ans)
