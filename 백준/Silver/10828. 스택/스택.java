@@ -33,7 +33,7 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		// 입력 및 초기화
-		init_table();
+//		init_table();
 		N = Integer.parseInt(br.readLine());
 		stack = new int[N];
 		size = 0;
@@ -42,15 +42,15 @@ public class Main {
 		// 로직
 		for (int i = 0; i < N; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			int type = table.get(st.nextToken());
+			String type = st.nextToken();
 
-			if (type == 0) { // push
+			if (type.equals("push")) { // push
 				stack[size++] = Integer.parseInt(st.nextToken());
-			} else if (type == 1) { // pop
+			} else if (type.equals("pop")) { // pop
 				sb.append(size == 0 ? -1 : stack[--size]).append("\n");
-			} else if (type == 2) { // size
+			} else if (type.equals("size")) { // size
 				sb.append(size).append("\n");
-			} else if (type == 3) {// empty
+			} else if (type.equals("empty")) {// empty
 				sb.append(size == 0 ? 1 : 0).append("\n");
 			} else { // top
 				sb.append(size == 0 ? -1 : stack[size-1]).append("\n");
